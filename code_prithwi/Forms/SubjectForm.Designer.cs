@@ -62,7 +62,11 @@ namespace SmartStudyPlanner.Forms
             this.btnAddSubject.Size = new System.Drawing.Size(100, 38);
             this.btnAddSubject.TabIndex = 1;
             this.btnAddSubject.Text = "Add New";
-            this.btnAddSubject.UseVisualStyleBackColor = true;
+            this.btnAddSubject.UseVisualStyleBackColor = false;
+            this.btnAddSubject.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(137)))), ((int)(((byte)(239)))));
+            this.btnAddSubject.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddSubject.FlatAppearance.BorderSize = 0;
+            this.btnAddSubject.ForeColor = System.Drawing.Color.White;
             this.btnAddSubject.Click += new System.EventHandler(this.btnAddSubject_Click);
             //
             // btnEditSubject
@@ -73,7 +77,11 @@ namespace SmartStudyPlanner.Forms
             this.btnEditSubject.Size = new System.Drawing.Size(100, 38);
             this.btnEditSubject.TabIndex = 2;
             this.btnEditSubject.Text = "Edit Selected";
-            this.btnEditSubject.UseVisualStyleBackColor = true;
+            this.btnEditSubject.UseVisualStyleBackColor = false;
+            this.btnEditSubject.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(137)))), ((int)(((byte)(239)))));
+            this.btnEditSubject.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEditSubject.FlatAppearance.BorderSize = 0;
+            this.btnEditSubject.ForeColor = System.Drawing.Color.White;
             this.btnEditSubject.Click += new System.EventHandler(this.btnEditSubject_Click);
             //
             // btnDeleteSubject
@@ -84,7 +92,11 @@ namespace SmartStudyPlanner.Forms
             this.btnDeleteSubject.Size = new System.Drawing.Size(100, 38);
             this.btnDeleteSubject.TabIndex = 3;
             this.btnDeleteSubject.Text = "Delete Selected";
-            this.btnDeleteSubject.UseVisualStyleBackColor = true;
+            this.btnDeleteSubject.UseVisualStyleBackColor = false;
+            this.btnDeleteSubject.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(137)))), ((int)(((byte)(239)))));
+            this.btnDeleteSubject.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteSubject.FlatAppearance.BorderSize = 0;
+            this.btnDeleteSubject.ForeColor = System.Drawing.Color.White;
             this.btnDeleteSubject.Click += new System.EventHandler(this.btnDeleteSubject_Click);
             //
             // SubjectForm
@@ -99,6 +111,9 @@ namespace SmartStudyPlanner.Forms
             this.Name = "SubjectForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Subject Management";
+            // Theme
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             ((System.ComponentModel.ISupportInitialize)(this.dgvSubjects)).EndInit();
             this.ResumeLayout(false);
 

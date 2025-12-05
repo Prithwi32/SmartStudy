@@ -370,6 +370,51 @@ namespace SmartStudyPlanner.Forms
                     
                     // Add padding for better readability
                     row.DefaultCellStyle.Padding = new Padding(8, 5, 8, 5);
+
+                    // Priority color indicator and emoji prefix
+                    try
+                    {
+                        var priorityCell = row.Cells["Priority"];
+                        var priorityText = task.Priority ?? TaskPriority.Medium;
+                        string displayText = priorityText;
+                        Color cellBack = Color.White;
+                        Color cellFore = Color.FromArgb(30, 41, 59);
+
+                        if (string.Equals(priorityText, TaskPriority.Low, StringComparison.OrdinalIgnoreCase))
+                        {
+                            displayText = "🟢 " + priorityText;
+                            cellBack = Color.FromArgb(220, 252, 231);
+                            cellFore = Color.FromArgb(6, 95, 70);
+                        }
+                        else if (string.Equals(priorityText, TaskPriority.Medium, StringComparison.OrdinalIgnoreCase))
+                        {
+                            displayText = "🟡 " + priorityText;
+                            cellBack = Color.FromArgb(255, 247, 200);
+                            cellFore = Color.FromArgb(133, 77, 14);
+                        }
+                        else if (string.Equals(priorityText, TaskPriority.High, StringComparison.OrdinalIgnoreCase))
+                        {
+                            displayText = "🔴 " + priorityText;
+                            cellBack = Color.FromArgb(254, 226, 226);
+                            cellFore = Color.FromArgb(153, 27, 27);
+                        }
+
+                        // Update displayed value
+                        priorityCell.Value = displayText;
+
+                        // Apply colored badge only when task is not completed or overdue (so status coloring stays prominent)
+                        if (task.Status != StudyTaskStatus.Completed && !task.IsOverdue())
+                        {
+                            priorityCell.Style.BackColor = cellBack;
+                            priorityCell.Style.ForeColor = cellFore;
+                            priorityCell.Style.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+                            priorityCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                        }
+                    }
+                    catch
+                    {
+                        // ignore styling errors to avoid breaking task loading
+                    }
                 }
             }
             catch (Exception ex)

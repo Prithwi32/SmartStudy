@@ -75,7 +75,11 @@ namespace SmartStudyPlanner.Forms
             this.btnAddTask.Size = new System.Drawing.Size(100, 38);
             this.btnAddTask.TabIndex = 1;
             this.btnAddTask.Text = "Add New";
-            this.btnAddTask.UseVisualStyleBackColor = true;
+            this.btnAddTask.UseVisualStyleBackColor = false;
+            this.btnAddTask.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(137)))), ((int)(((byte)(239)))));
+            this.btnAddTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddTask.FlatAppearance.BorderSize = 0;
+            this.btnAddTask.ForeColor = System.Drawing.Color.White;
             this.btnAddTask.Click += new System.EventHandler(this.btnAddTask_Click);
             //
             // btnEditTask
@@ -86,7 +90,11 @@ namespace SmartStudyPlanner.Forms
             this.btnEditTask.Size = new System.Drawing.Size(100, 38);
             this.btnEditTask.TabIndex = 2;
             this.btnEditTask.Text = "Edit Selected";
-            this.btnEditTask.UseVisualStyleBackColor = true;
+            this.btnEditTask.UseVisualStyleBackColor = false;
+            this.btnEditTask.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(137)))), ((int)(((byte)(239)))));
+            this.btnEditTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEditTask.FlatAppearance.BorderSize = 0;
+            this.btnEditTask.ForeColor = System.Drawing.Color.White;
             this.btnEditTask.Click += new System.EventHandler(this.btnEditTask_Click);
             //
             // btnDeleteTask
@@ -97,7 +105,11 @@ namespace SmartStudyPlanner.Forms
             this.btnDeleteTask.Size = new System.Drawing.Size(100, 38);
             this.btnDeleteTask.TabIndex = 3;
             this.btnDeleteTask.Text = "Delete Selected";
-            this.btnDeleteTask.UseVisualStyleBackColor = true;
+            this.btnDeleteTask.UseVisualStyleBackColor = false;
+            this.btnDeleteTask.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(137)))), ((int)(((byte)(239)))));
+            this.btnDeleteTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteTask.FlatAppearance.BorderSize = 0;
+            this.btnDeleteTask.ForeColor = System.Drawing.Color.White;
             this.btnDeleteTask.Click += new System.EventHandler(this.btnDeleteTask_Click);
             //
             // panelFilters
@@ -224,6 +236,10 @@ namespace SmartStudyPlanner.Forms
             this.Name = "TaskForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Task Management";
+            // Theme
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.panelFilters.BackColor = System.Drawing.Color.White;
             ((System.ComponentModel.ISupportInitialize)(this.dgvTasks)).EndInit();
             this.panelFilters.ResumeLayout(false);
             this.panelFilters.PerformLayout();

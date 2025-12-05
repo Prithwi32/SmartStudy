@@ -13,6 +13,9 @@ namespace SmartStudyPlanner.Forms
     {
         private TaskManager taskManager;
         private SubjectManager subjectManager;
+        private List<StudyTask> currentDisplayedTasks = new List<StudyTask>();
+        private string lastSortedColumn = null;
+        private SortOrder lastSortOrder = SortOrder.None;
 
         // UI Controls
         private Panel headerPanel;
@@ -231,6 +234,12 @@ namespace SmartStudyPlanner.Forms
             dgvAllTasks.Location = new Point(20, 20);
             dgvAllTasks.Size = new Size(tasksPanel.Width - 40, tasksPanel.Height - 40);
             dgvAllTasks.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            // Use programmatic sorting so we can handle custom priority/date ordering
+            foreach (DataGridViewColumn col in dgvAllTasks.Columns)
+            {
+                col.SortMode = DataGridViewColumnSortMode.Programmatic;
+            }
+            dgvAllTasks.ColumnHeaderMouseClick += DgvAllTasks_ColumnHeaderMouseClick;
             tasksPanel.Controls.Add(dgvAllTasks);
             this.Controls.Add(tasksPanel);
         }
@@ -336,15 +345,16 @@ namespace SmartStudyPlanner.Forms
                 EnableHeadersVisualStyles = false
             };
 
-            // Modern header style
+            // Modern header style (deep blue header row)
             dgv.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
             {
-                BackColor = Color.FromArgb(248, 250, 252),
-                ForeColor = Color.FromArgb(51, 65, 85),
+                BackColor = Color.FromArgb(30, 64, 175),
+                ForeColor = Color.White,
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 Alignment = DataGridViewContentAlignment.MiddleLeft,
-                Padding = new Padding(10, 0, 0, 0)
+                Padding = new Padding(12, 0, 0, 0)
             };
+            dgv.ColumnHeadersHeight = 50;
 
             dgv.DefaultCellStyle = new DataGridViewCellStyle
             {
@@ -359,6 +369,14 @@ namespace SmartStudyPlanner.Forms
             dgv.Columns.Add(new DataGridViewTextBoxColumn { Name = "DueDate", HeaderText = "📅 Due Date", Width = 150 });
             dgv.Columns.Add(new DataGridViewTextBoxColumn { Name = "Priority", HeaderText = "⚡ Priority", Width = 120 });
             dgv.Columns.Add(new DataGridViewTextBoxColumn { Name = "Status", HeaderText = "✓ Status", Width = 150 });
+
+            // Ensure each header cell uses the same header style so all headers paint consistently
+            foreach (DataGridViewColumn col in dgv.Columns)
+            {
+                var hstyle = new DataGridViewCellStyle(dgv.ColumnHeadersDefaultCellStyle);
+                // make sure alignment/padding applied per-column header
+                col.HeaderCell.Style = hstyle;
+            }
 
             return dgv;
         }
@@ -508,7 +526,10 @@ namespace SmartStudyPlanner.Forms
 
         private void DisplayTasks(List<StudyTask> tasks)
         {
-            foreach (var task in tasks)
+            // Keep a copy of the list currently displayed to enable sorting
+            currentDisplayedTasks = tasks.ToList();
+
+            foreach (var task in currentDisplayedTasks)
             {
                 int rowIndex = dgvAllTasks.Rows.Add(
                     task.Title, 
@@ -539,6 +560,92 @@ namespace SmartStudyPlanner.Forms
                     dgvAllTasks.Rows[rowIndex].DefaultCellStyle.BackColor = Color.White;
                     dgvAllTasks.Rows[rowIndex].DefaultCellStyle.ForeColor = Color.FromArgb(51, 65, 85);
                 }
+            }
+
+            // Avoid the grid showing the first row as selected (blue). Clear selection after populating.
+            dgvAllTasks.ClearSelection();
+        }
+
+        private void DgvAllTasks_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                var column = dgvAllTasks.Columns[e.ColumnIndex];
+                string columnName = column.Name;
+
+                // Determine next sort order
+                SortOrder newOrder = SortOrder.Ascending;
+                if (lastSortedColumn == columnName)
+                {
+                    newOrder = lastSortOrder == SortOrder.Ascending ? SortOrder.Descending : SortOrder.Ascending;
+                }
+
+                // Sort the currentDisplayedTasks according to column
+                IEnumerable<StudyTask> sorted = currentDisplayedTasks;
+                if (string.Equals(columnName, "Priority", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Map priorities to numeric order Low(0), Medium(1), High(2)
+                    Func<string, int> map = p =>
+                    {
+                        if (string.Equals(p, TaskPriority.Low, StringComparison.OrdinalIgnoreCase)) return 0;
+                        if (string.Equals(p, TaskPriority.Medium, StringComparison.OrdinalIgnoreCase)) return 1;
+                        if (string.Equals(p, TaskPriority.High, StringComparison.OrdinalIgnoreCase)) return 2;
+                        return 1; // default to Medium
+                    };
+
+                    sorted = newOrder == SortOrder.Ascending
+                        ? currentDisplayedTasks.OrderBy(t => map(t.Priority))
+                        : currentDisplayedTasks.OrderByDescending(t => map(t.Priority));
+                }
+                else if (string.Equals(columnName, "DueDate", StringComparison.OrdinalIgnoreCase))
+                {
+                    sorted = newOrder == SortOrder.Ascending
+                        ? currentDisplayedTasks.OrderBy(t => t.DueDate)
+                        : currentDisplayedTasks.OrderByDescending(t => t.DueDate);
+                }
+                else if (string.Equals(columnName, "Title", StringComparison.OrdinalIgnoreCase))
+                {
+                    sorted = newOrder == SortOrder.Ascending
+                        ? currentDisplayedTasks.OrderBy(t => t.Title)
+                        : currentDisplayedTasks.OrderByDescending(t => t.Title);
+                }
+                else if (string.Equals(columnName, "Subject", StringComparison.OrdinalIgnoreCase))
+                {
+                    sorted = newOrder == SortOrder.Ascending
+                        ? currentDisplayedTasks.OrderBy(t => t.Subject)
+                        : currentDisplayedTasks.OrderByDescending(t => t.Subject);
+                }
+                else if (string.Equals(columnName, "Status", StringComparison.OrdinalIgnoreCase))
+                {
+                    sorted = newOrder == SortOrder.Ascending
+                        ? currentDisplayedTasks.OrderBy(t => t.Status)
+                        : currentDisplayedTasks.OrderByDescending(t => t.Status);
+                }
+                else
+                {
+                    // default fallback
+                    sorted = newOrder == SortOrder.Ascending
+                        ? currentDisplayedTasks.OrderBy(t => t.Title)
+                        : currentDisplayedTasks.OrderByDescending(t => t.Title);
+                }
+
+                // Refresh grid with sorted list
+                dgvAllTasks.Rows.Clear();
+                DisplayTasks(sorted.ToList());
+
+                // Update glyph on header
+                foreach (DataGridViewColumn col in dgvAllTasks.Columns)
+                {
+                    col.HeaderCell.SortGlyphDirection = SortOrder.None;
+                }
+                column.HeaderCell.SortGlyphDirection = newOrder;
+
+                lastSortedColumn = columnName;
+                lastSortOrder = newOrder;
+            }
+            catch
+            {
+                // ignore sorting errors
             }
         }
 

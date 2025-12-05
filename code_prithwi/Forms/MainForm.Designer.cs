@@ -304,6 +304,35 @@ namespace SmartStudyPlanner.Forms
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Smart Study Planner";
+            // Theme
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.menuStrip1.BackColor = System.Drawing.Color.White;
+            // DataGridView styling
+            this.dgvTodayTasks.BackgroundColor = System.Drawing.Color.White;
+            this.dgvTodayTasks.EnableHeadersVisualStyles = false;
+            this.dgvTodayTasks.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(137)))), ((int)(((byte)(239)))));
+            this.dgvTodayTasks.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
+            this.dgvTodayTasks.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.dgvTodayTasks.DefaultCellStyle.BackColor = System.Drawing.Color.White;
+            this.dgvTodayTasks.GridColor = System.Drawing.Color.LightGray;
+
+            this.dgvUpcomingTasks.BackgroundColor = System.Drawing.Color.White;
+            this.dgvUpcomingTasks.EnableHeadersVisualStyles = false;
+            this.dgvUpcomingTasks.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(137)))), ((int)(((byte)(239)))));
+            this.dgvUpcomingTasks.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
+            this.dgvUpcomingTasks.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.dgvUpcomingTasks.DefaultCellStyle.BackColor = System.Drawing.Color.White;
+            this.dgvUpcomingTasks.GridColor = System.Drawing.Color.LightGray;
+
+            this.dgvOverdueTasks.BackgroundColor = System.Drawing.Color.White;
+            this.dgvOverdueTasks.EnableHeadersVisualStyles = false;
+            this.dgvOverdueTasks.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(137)))), ((int)(((byte)(239)))));
+            this.dgvOverdueTasks.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
+            this.dgvOverdueTasks.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.dgvOverdueTasks.DefaultCellStyle.BackColor = System.Drawing.Color.White;
+            this.dgvOverdueTasks.GridColor = System.Drawing.Color.LightGray;
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panelDashboard.ResumeLayout(false);
