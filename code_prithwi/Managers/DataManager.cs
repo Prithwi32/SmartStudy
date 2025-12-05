@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using SmartStudyPlanner.Models;
@@ -50,7 +51,7 @@ namespace SmartStudyPlanner.Managers
 
             try
             {
-                string jsonString = await File.ReadAllTextAsync(filePath);
+                string jsonString = await Task.Run(() => File.ReadAllText(filePath, Encoding.UTF8));
                 return JsonSerializer.Deserialize<T>(jsonString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             }
             catch (Exception ex)
@@ -68,7 +69,7 @@ namespace SmartStudyPlanner.Managers
             {
                 var options = new JsonSerializerOptions { WriteIndented = true };
                 string jsonString = JsonSerializer.Serialize(data, options);
-                await File.WriteAllTextAsync(filePath, jsonString);
+                await Task.Run(() => File.WriteAllText(filePath, jsonString, Encoding.UTF8));
             }
             catch (Exception ex)
             {

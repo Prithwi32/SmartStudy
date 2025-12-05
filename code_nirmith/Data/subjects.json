@@ -1,0 +1,20 @@
+[
+  {
+    "Id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "Name": "Computer Science",
+    "Code": "CS101",
+    "TeacherName": "Dr. Smith"
+  },
+  {
+    "Id": "4fa85f64-5717-4562-b3fc-2c963f66afa7",
+    "Name": "Mathematics",
+    "Code": "MATH201",
+    "TeacherName": "Prof. Johnson"
+  },
+  {
+    "Id": "5fa85f64-5717-4562-b3fc-2c963f66afa8",
+    "Name": "Physics",
+    "Code": "PHY101",
+    "TeacherName": "Dr. Williams"
+  }
+]

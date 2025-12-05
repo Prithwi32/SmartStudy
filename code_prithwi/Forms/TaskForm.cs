@@ -120,12 +120,10 @@ namespace SmartStudyPlanner.Forms
 
         private void dgvTasks_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (dgvTasks.Rows[e.RowIndex].DataBoundItem is System.Dynamic.ExpandoObject || dgvTasks.Rows[e.RowIndex].DataBoundItem is System.Runtime.CompilerServices.AnonymousObject)
+            if (dgvTasks.Rows[e.RowIndex].DataBoundItem is StudyTask task)
             {
-                // Access properties using reflection or by casting to dynamic
-                dynamic rowData = dgvTasks.Rows[e.RowIndex].DataBoundItem;
-                DateTime dueDate = rowData.DueDate;
-                Status status = rowData.Status;
+                DateTime dueDate = task.DueDate;
+                Status status = task.Status;
 
                 if (status == Status.Completed)
                 {

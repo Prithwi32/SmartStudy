@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using SmartStudyPlanner.Forms;
 
 namespace SmartStudyPlanner
 {

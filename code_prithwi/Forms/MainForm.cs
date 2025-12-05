@@ -25,7 +25,8 @@ namespace SmartStudyPlanner.Forms
         private async void MainForm_Load(object sender, EventArgs e)
         {
             try
-            {n                await _subjectManager.LoadSubjectsAsync();
+            {
+                await _subjectManager.LoadSubjectsAsync();
                 await _taskManager.LoadTasksAsync();
                 RefreshDashboard();
             }
